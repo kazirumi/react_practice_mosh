@@ -2,6 +2,7 @@ import { useState } from "react";
 import ListGroup from "./components/ListGroup";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
+import './App.css'
 
 function App() {
   let [items, setItems] = useState([
@@ -25,9 +26,12 @@ function App() {
 
   return (
     <div>
-      <Button button_type="danger" onClick={handleBtnClick}>
-        Not Done yet
-      </Button>
+      <div className="">
+        <Button button_type="danger" onClick={handleBtnClick}>
+          Not Done yet
+        </Button>
+      </div>
+
       {showAlert && (
         <Alert
           onClose={() => {

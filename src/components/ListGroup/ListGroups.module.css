@@ -1,0 +1,19 @@
+.listGroupItem{
+    border: solid;
+    border-color: yellow;
+    margin: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+
+
+}
+
+.listGroup{
+    background-color: red;
+    list-style: none;
+    padding: 10px 10px 10px 10px;
+
+}
+
+.active{
+    background-color: orange;
+}
