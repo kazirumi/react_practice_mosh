@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ListGroup from "./components/ListGroup";
 import Alert from "./components/Alert";
-import Button from "./components/Button";
+import Button from "./components/Button/Button";
 import './App.css'
+import Like from "./components/Like/Like";
 
 function App() {
   let [items, setItems] = useState([
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div>
+      <Like onClick={()=>console.log("clicked like")}/>
       <div className="">
         <Button button_type="danger" onClick={handleBtnClick}>
           Not Done yet
