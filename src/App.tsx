@@ -6,30 +6,36 @@ import "./App.css";
 import Like from "./components/Like/Like";
 import ExpandableText from "./components/ExpandableText/ExpandableText";
 import Form from "./components/Form/Form";
+import ExpenseTracker from "./components/ExpenseTracker";
 
 function App() {
-  let [items, setItems] = useState([
-    "Candy",
-    "Chocolate",
-    "Biryani",
-    "Cake",
-    "Barbequeue",
-  ]);
+  // let [items, setItems] = useState([
+  //   "Candy",
+  //   "Chocolate",
+  //   "Biryani",
+  //   "Cake",
+  //   "Barbequeue",
+  // ]);
 
-  const [showAlert, setShowAlert] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
 
-  const handleSelectItem = (item: string) => {
-    console.log(item);
-  };
+  // const handleSelectItem = (item: string) => {
+  //   console.log(item);
+  // };
 
-  const handleBtnClick = () => {
-    console.log("click");
-    setShowAlert(!showAlert);
-  };
+  // const handleBtnClick = () => {
+  //   console.log("click");
+  //   setShowAlert(!showAlert);
+  // };
 
   return (
     <div>
-      <Form />
+      
+      <ExpenseTracker />
+
+      {/* this was the last practices */}
+
+      {/* <Form />
       <ExpandableText stringLimit={30}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non corrupti
         quam perferendis voluptates sequi. Animi dolor fuga aut, amet
@@ -59,7 +65,7 @@ function App() {
         </Alert>
       )}
 
-      <ListGroup items={items} heading="Food" onSelectItem={handleSelectItem} />
+      <ListGroup items={items} heading="Food" onSelectItem={handleSelectItem} /> */}
     </div>
   );
 }

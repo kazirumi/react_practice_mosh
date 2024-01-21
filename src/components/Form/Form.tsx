@@ -26,7 +26,7 @@ const Form = () => {
     <div>
       <div className="mb-3 ">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="name" className="form-label"></label>
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             {...register("name")}
             placeholder="name"
@@ -36,7 +36,7 @@ const Form = () => {
           />
           {errors.name  && <p className="text-danger">{errors.name.message}</p>}
 
-          <label htmlFor="age" className="form-label"></label>
+          <label htmlFor="age" className="form-label">Age</label>
           <input
             {...register("age",{valueAsNumber:true})}
             placeholder="age"
