@@ -8,11 +8,13 @@ import ExpandableText from "./components/ExpandableText/ExpandableText";
 import Form from "./components/Form/Form";
 import ExpenseTracker from "./components/ExpenseTracker";
 import ProductList from "./components/ProductList/ProductList";
-import axios, { CanceledError } from "axios";
+import apiClient, { CanceledError } from "./services/api-client";
+
 interface user {
   id: number;
   name: string;
 }
+
 function App() {
   // let [items, setItems] = useState([
   //   "Candy",
@@ -39,8 +41,8 @@ function App() {
 
   useEffect(() => {
     const controller = new AbortController();
-    axios
-      .get<user[]>("https://jsonplaceholder.typicode.com/users", {
+    apiClient
+      .get<user[]>("/users", {
         signal: controller.signal,
       })
       .then((res) => setUsers(res.data))
@@ -65,8 +67,8 @@ function App() {
       })
     );
 
-    axios
-      .delete("https://jsonplaceholder.typicode.com/users/" + userToDelete.id)
+    apiClient
+      .delete("/users/" + userToDelete.id)
       .catch((err) => {
         setError(err.message);
         setUsers([...OriginalData]);
@@ -75,15 +77,21 @@ function App() {
 
   let userUpdate = (userToUpdate: user) => {
     const OriginalData = [...users];
-    const updatedUser = { ...userToUpdate, name: userToUpdate.name + " updated" };
+    const updatedUser = {
+      ...userToUpdate,
+      name: userToUpdate.name + " updated",
+    };
     setUsers(
       users.map((user) => {
         if (user.id == updatedUser.id) return updatedUser;
         return user;
       })
     );
-    axios
-      .put("https://jsonplaceholder.typicode.com/users/" + updatedUser.id,updatedUser)
+    apiClient
+      .put(
+        "/users/" + updatedUser.id,
+        updatedUser
+      )
       .catch((err) => {
         setError(err.message);
         setUsers([...OriginalData]);
