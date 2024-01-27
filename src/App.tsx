@@ -7,6 +7,7 @@ import Like from "./components/Like/Like";
 import ExpandableText from "./components/ExpandableText/ExpandableText";
 import Form from "./components/Form/Form";
 import ExpenseTracker from "./components/ExpenseTracker";
+import ProductList from "./components/ProductList/ProductList";
 
 function App() {
   // let [items, setItems] = useState([
@@ -27,11 +28,19 @@ function App() {
   //   console.log("click");
   //   setShowAlert(!showAlert);
   // };
-
+const [category,SetCategory]= useState("");
   return (
     <div>
       
-      <ExpenseTracker />
+      <select name="" onChange={(event)=>SetCategory(event.target.value)} id="" className="form-select">
+        <option value=""></option>
+        <option value="Clothing">Clothing</option>
+        <option value="HouseHold">Household</option>
+
+      </select>
+      <ProductList category={category} />
+      
+      {/* <ExpenseTracker /> */}
 
       {/* this was the last practices */}
 
