@@ -10,6 +10,7 @@ import ExpenseTracker from "./components/ExpenseTracker";
 import ProductList from "./components/ProductList/ProductList";
 import { CanceledError } from "./services/api-client";
 import userService, { User } from "./services/userService";
+import useUsers from "./hooks/useUsers";
 
 function App() {
   // let [items, setItems] = useState([
@@ -32,25 +33,7 @@ function App() {
   // };
   // const [category,SetCategory]= useState("");
 
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<string>("");
-
-  useEffect(() => {
-    const { request, cancel } = userService.getAll<User>();
-
-    request
-      .then((res) => setUsers(res.data))
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-      });
-
-    return () => {
-      setUsers([]);
-      setError("");
-      cancel();
-    };
-  }, []);
+  const { users, setUsers, error, setError } = useUsers();
 
   let userDelete = (userToDelete: User) => {
     // console.log(userToDelete.id);
