@@ -8,12 +8,8 @@ import ExpandableText from "./components/ExpandableText/ExpandableText";
 import Form from "./components/Form/Form";
 import ExpenseTracker from "./components/ExpenseTracker";
 import ProductList from "./components/ProductList/ProductList";
-import apiClient, { CanceledError } from "./services/api-client";
-
-interface user {
-  id: number;
-  name: string;
-}
+import { CanceledError } from "./services/api-client";
+import userService, { User } from "./services/userService";
 
 function App() {
   // let [items, setItems] = useState([
@@ -36,15 +32,13 @@ function App() {
   // };
   // const [category,SetCategory]= useState("");
 
-  const [users, setUsers] = useState<user[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const controller = new AbortController();
-    apiClient
-      .get<user[]>("/users", {
-        signal: controller.signal,
-      })
+    const { request, cancel } = userService.getAll<User>();
+
+    request
       .then((res) => setUsers(res.data))
       .catch((err) => {
         if (err instanceof CanceledError) return;
@@ -54,11 +48,11 @@ function App() {
     return () => {
       setUsers([]);
       setError("");
-      controller.abort();
+      cancel();
     };
   }, []);
 
-  let userDelete = (userToDelete: user) => {
+  let userDelete = (userToDelete: User) => {
     // console.log(userToDelete.id);
     const OriginalData = [...users];
     setUsers(
@@ -67,15 +61,13 @@ function App() {
       })
     );
 
-    apiClient
-      .delete("/users/" + userToDelete.id)
-      .catch((err) => {
-        setError(err.message);
-        setUsers([...OriginalData]);
-      });
+    userService.delete(userToDelete.id).catch((err) => {
+      setError(err.message);
+      setUsers([...OriginalData]);
+    });
   };
 
-  let userUpdate = (userToUpdate: user) => {
+  let userUpdate = (userToUpdate: User) => {
     const OriginalData = [...users];
     const updatedUser = {
       ...userToUpdate,
@@ -87,15 +79,11 @@ function App() {
         return user;
       })
     );
-    apiClient
-      .put(
-        "/users/" + updatedUser.id,
-        updatedUser
-      )
-      .catch((err) => {
-        setError(err.message);
-        setUsers([...OriginalData]);
-      });
+
+    userService.update<User>(userToUpdate).catch((err) => {
+      setError(err.message);
+      setUsers([...OriginalData]);
+    });
   };
 
   return (
@@ -112,7 +100,6 @@ function App() {
               {user.name}
               <div>
                 <button
-                  key={user.id}
                   onClick={() => userUpdate(user)}
                   className="btn btn-outline-secondary mx-2"
                 >
